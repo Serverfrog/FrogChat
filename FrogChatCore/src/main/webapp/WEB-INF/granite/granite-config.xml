@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE granite-config PUBLIC "-//Granite Data Services//DTD granite-config internal//EN"
+    "http://www.graniteds.org/public/dtd/3.0.0/granite-config.dtd">
+
+<granite-config scan="true" >    
+    <class-getter type="org.granite.hibernate4.HibernateClassGetter"/>
+
+    <externalizers>
+        <externalizer type="org.granite.hibernate4.HibernateExternalizer">
+            <include annotated-with="javax.persistence.Entity"/>
+            <include annotated-with="javax.persistence.MappedSuperclass"/>
+            <include annotated-with="javax.persistence.Embeddable"/>
+        </externalizer>
+    </externalizers>
+</granite-config>

@@ -36,7 +36,7 @@ public class UserListBean {
 
     private Date lastChanged = new Date();
 
-    @Schedule(hour = "*", minute = "*", second = "*/30")
+    @Schedule(hour = "*", minute = "*", second = "*/30", persistent = false)
     public void checkUsers() {
         Date mustLastSeen = DateUtils.addSeconds(new Date(), -30);
         for (User user : userlist.keySet()) {

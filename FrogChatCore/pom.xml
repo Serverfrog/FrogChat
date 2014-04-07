@@ -8,7 +8,7 @@
     </parent>
     <groupId>de.serverfrog</groupId>
     <artifactId>FrogChatCore</artifactId>
-    <packaging>ejb</packaging> 
+    <packaging>war</packaging> 
     
     <name>2 - Core - FrogChatCore</name>
     <build>
@@ -20,6 +20,11 @@
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
             </plugin>
         </plugins>
         <resources>
@@ -70,6 +75,10 @@
         <dependency>
             <groupId>org.graniteds</groupId>
             <artifactId>granite-server-eclipselink</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-server-hibernate4</artifactId>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 
 import de.serverfrog.frogchat.ApplicationConfig;
 import de.serverfrog.frogchat.encryption.PGPFrogUtil;
+import de.serverfrog.frogchat.services.UserService;
 
 /**
  *
@@ -42,6 +43,9 @@ public class ChatSecurity {
     @Inject
     private ApplicationConfig config;
 
+    @Inject
+    UserService service;
+
     private final static Logger L = LoggerFactory.getLogger(ChatSecurity.class);
 
     private final File PGP_PRIVATE_KEY_FILE = new File(PGPFrogUtil.HOME_KEY_FOLDER.getAbsolutePath()
@@ -51,6 +55,7 @@ public class ChatSecurity {
 
     @PostConstruct
     public void init() {
+        System.out.println(service.hello(USER));
         File userPath = new File(PGPFrogUtil.HOME_KEY_FOLDER.getAbsolutePath() + File.separatorChar + USER);
         if ( !userPath.exists() ) userPath.mkdirs();
         if ( !userPath.canRead() || !userPath.canWrite() ) {

@@ -11,7 +11,7 @@
         <profile> 
             <id>default</id> 
             <activation> 
-                <activeByDefault>true</activeByDefault> 
+                <activeByDefault>false</activeByDefault> 
             </activation> 
             <properties>
                 <!--Define your own Profile with your own password-->
@@ -349,6 +349,5 @@
         <module>FrogChatCore</module>
         <module>FrogChatGui</module>
         <module>FrogChatGuiFx</module>
-        <module>FrogChatWeb</module>
     </modules>
 </project>

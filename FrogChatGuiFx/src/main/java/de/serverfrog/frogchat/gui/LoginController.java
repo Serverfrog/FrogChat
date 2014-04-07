@@ -21,7 +21,8 @@ public class LoginController {
         Context context = MainApp.getContext();
         final ServerSession serverSession = context.set(
                 new ServerSession("/chat", "localhost", 8080)); // <2>
-        serverSession.addRemoteAliasPackage("org.graniteds.tutorial.data.client"); // <3>
+        serverSession.addRemoteAliasPackage("de.serverfrog.frogchat.entity"); // <3>
+        serverSession.addRemoteAliasPackage("de.serverfrog.frogchat.service"); // <3>
         final UserService helloWorldService = context.set("userService",
                 new UserService(serverSession)); // <3>
 

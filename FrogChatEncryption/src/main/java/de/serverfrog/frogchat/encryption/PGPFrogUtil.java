@@ -55,7 +55,6 @@ public class PGPFrogUtil {
 
     static {
         Security.addProvider(new BouncyCastleProvider());
-        System.out.println("Loaded Provider");
     }
 
     public static final File HOME_KEY_FOLDER = new File(
@@ -78,23 +77,18 @@ public class PGPFrogUtil {
      */
     public static PGPSecretKeyRing generateKeys(String userId, String password) {
         try {
-            System.out.println("Generate Keys");
             KeyPairGenerator kpg = KeyPairGenerator.getInstance(ALGORYTHM_STRING, PROVIDER_STRING);
             kpg.initialize(4096);
             Date now = new Date();
-            System.out.println("Start Generating");
             KeyPair keyPair = kpg.generateKeyPair();
-            System.out.println("Generated First KeyPair");
             PGPKeyPair secretKey = new PGPKeyPair(RSA_GENERAL, keyPair, now);
 
             KeyPair keyPair2 = kpg.generateKeyPair();
-            System.out.println("Generated Secound KeyPair");
             PGPKeyPair secretKey2 = new PGPKeyPair(RSA_GENERAL, keyPair2, now);
 
             PGPSignatureSubpacketGenerator subpacketGen = new PGPSignatureSubpacketGenerator();
             subpacketGen.setKeyFlags(true, KeyFlags.CERTIFY_OTHER | KeyFlags.SIGN_DATA
                     | KeyFlags.ENCRYPT_COMMS | KeyFlags.ENCRYPT_STORAGE);
-            System.out.println("PGPKeyRingGenerator");
             PGPKeyRingGenerator keyRingGen = new PGPKeyRingGenerator(PGPSignature.POSITIVE_CERTIFICATION,
                     secretKey, userId, RSA_GENERAL, password.toCharArray(), true, subpacketGen.generate(),
                     null, new SecureRandom(), PROVIDER_STRING);
@@ -115,9 +109,7 @@ public class PGPFrogUtil {
      */
     public static void writeKeysInto(PGPSecretKeyRing secretKeyRing, File keyFolder) {
         try {
-            System.out.println("Read Public key");
             secretKeyRing.getPublicKey().encode(new FileOutputStream(keyFolder.getAbsolutePath() + PUBLIC_KEY_PATH_SUFFIX));
-            System.out.println("Read Secrete key");
             secretKeyRing.getSecretKey().encode(new FileOutputStream(keyFolder.getAbsolutePath() + SECURE_KEY_PATH_SUFFIX));
         } catch (IOException ex) {
             Logger.getLogger(PGPFrogUtil.class.getName()).log(Level.SEVERE, null, ex);
@@ -295,7 +287,6 @@ public class PGPFrogUtil {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             IOUtils.write(inputString, new FileOutputStream(tempFile));
             encrypt(tempFile, byteArrayOutputStream, key);
-            System.out.println(Arrays.toString(byteArrayOutputStream.toByteArray()));
             return new String(Base64.encodeBase64(byteArrayOutputStream.toByteArray()));
         } catch (IOException | NoSuchProviderException | PGPException ex) {
             throw new RuntimeException("A Exception occure.ExClass=" + ex.getClass() + ", ex=" + ex.getMessage());

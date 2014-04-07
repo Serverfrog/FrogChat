@@ -36,8 +36,8 @@ public class RestConfig extends Application {
      * given list with all resources defined in the project. 
      */ 
     private void addRestResourceClasses(Set<Class<?>> resources) { 
-        resources.add(ChatRest.class); 
-        resources.add(UserRest.class); 
-        resources.add(DebugRest.class); 
+        resources.add(de.serverfrog.frogchat.rest.ChatRest.class); 
+        resources.add(de.serverfrog.frogchat.rest.DebugRest.class); 
+        resources.add(de.serverfrog.frogchat.rest.UserRest.class); 
     } 
 }

@@ -20,7 +20,7 @@
         <app.name>frogchat</app.name>
         <client>javafx</client>
         <javafx.version>2.2</javafx.version>
-        <mainclass.name>de.serverfrog.frogchatgui.MainApp</mainclass.name>
+        <mainclass.name>de.serverfrog.frogchat.gui.MainApp</mainclass.name>
     </properties>
 
     <build>
