@@ -15,15 +15,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.Security;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.net.util.Base64;
 import org.bouncycastle.bcpg.sig.KeyFlags;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.PGPCompressedData;
@@ -45,7 +44,6 @@ import org.bouncycastle.openpgp.PGPSecretKeyRingCollection;
 import org.bouncycastle.openpgp.PGPSignature;
 import org.bouncycastle.openpgp.PGPSignatureSubpacketGenerator;
 import org.bouncycastle.openpgp.PGPUtil;
-import org.bouncycastle.util.encoders.Base64;
 
 import static org.bouncycastle.bcpg.PublicKeyAlgorithmTags.RSA_GENERAL;
 
@@ -298,7 +296,7 @@ public class PGPFrogUtil {
             IOUtils.write(inputString, new FileOutputStream(tempFile));
             encrypt(tempFile, byteArrayOutputStream, key);
             System.out.println(Arrays.toString(byteArrayOutputStream.toByteArray()));
-            return new String(Base64.decode(byteArrayOutputStream.toByteArray()));
+            return new String(Base64.encodeBase64(byteArrayOutputStream.toByteArray()));
         } catch (IOException | NoSuchProviderException | PGPException ex) {
             throw new RuntimeException("A Exception occure.ExClass=" + ex.getClass() + ", ex=" + ex.getMessage());
         } finally {
@@ -310,7 +308,7 @@ public class PGPFrogUtil {
     @Deprecated
     public static String getDecryptedBase64(String inputString, File privateKey, String password) throws IOException {
         try {
-            return decrypt(Base64.decode(inputString), privateKey, password.toCharArray());
+            return decrypt(Base64.decodeBase64(inputString), privateKey, password.toCharArray());
         } catch (PGPException | IOException | NoSuchProviderException ex) {
             throw new IOException("A Exception occure. ex=" + ex.getMessage());
         }

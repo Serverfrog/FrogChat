@@ -251,11 +251,13 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcpg-jdk16</artifactId>
                 <version>1.46</version>
+                <scope>compile</scope>
             </dependency> 
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-ext-jdk16</artifactId>
                 <version>1.46</version>
+                <scope>compile</scope>
             </dependency>
             <dependency> 
                 <groupId>javax</groupId> 
@@ -334,6 +336,11 @@
                 <groupId>org.graniteds</groupId>
                 <artifactId>granite-client-java</artifactId>
                 <version>${graniteds.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-net</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>3.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

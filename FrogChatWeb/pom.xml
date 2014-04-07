@@ -10,7 +10,7 @@
     <artifactId>FrogChatWeb</artifactId>
     <packaging>war</packaging>
 
-    <name>4 - Web - FrogChatWeb</name>
+    <name>3 - Web - FrogChatWeb</name>
 
     
     <dependencies>

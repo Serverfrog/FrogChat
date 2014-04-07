@@ -27,5 +27,9 @@
             <artifactId>commons-io</artifactId>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+        </dependency>
     </dependencies>
 </project>
