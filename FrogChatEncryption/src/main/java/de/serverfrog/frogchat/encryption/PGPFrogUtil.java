@@ -15,8 +15,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.Security;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,6 +57,7 @@ public class PGPFrogUtil {
 
     static {
         Security.addProvider(new BouncyCastleProvider());
+        System.out.println("Loaded Provider");
     }
 
     public static final File HOME_KEY_FOLDER = new File(
@@ -76,18 +80,23 @@ public class PGPFrogUtil {
      */
     public static PGPSecretKeyRing generateKeys(String userId, String password) {
         try {
+            System.out.println("Generate Keys");
             KeyPairGenerator kpg = KeyPairGenerator.getInstance(ALGORYTHM_STRING, PROVIDER_STRING);
             kpg.initialize(4096);
             Date now = new Date();
+            System.out.println("Start Generating");
             KeyPair keyPair = kpg.generateKeyPair();
+            System.out.println("Generated First KeyPair");
             PGPKeyPair secretKey = new PGPKeyPair(RSA_GENERAL, keyPair, now);
 
             KeyPair keyPair2 = kpg.generateKeyPair();
+            System.out.println("Generated Secound KeyPair");
             PGPKeyPair secretKey2 = new PGPKeyPair(RSA_GENERAL, keyPair2, now);
 
             PGPSignatureSubpacketGenerator subpacketGen = new PGPSignatureSubpacketGenerator();
             subpacketGen.setKeyFlags(true, KeyFlags.CERTIFY_OTHER | KeyFlags.SIGN_DATA
                     | KeyFlags.ENCRYPT_COMMS | KeyFlags.ENCRYPT_STORAGE);
+            System.out.println("PGPKeyRingGenerator");
             PGPKeyRingGenerator keyRingGen = new PGPKeyRingGenerator(PGPSignature.POSITIVE_CERTIFICATION,
                     secretKey, userId, RSA_GENERAL, password.toCharArray(), true, subpacketGen.generate(),
                     null, new SecureRandom(), PROVIDER_STRING);
@@ -174,7 +183,7 @@ public class PGPFrogUtil {
         ByteArrayOutputStream bOut = new ByteArrayOutputStream();
         // get the data from the original file
         PGPCompressedDataGenerator comData = new PGPCompressedDataGenerator(PGPCompressedDataGenerator.BZIP2);
-        PGPUtil.writeFileToLiteralData(comData.open(bOut), PGPLiteralData.BINARY, file);
+        PGPUtil.writeFileToLiteralData(comData.open(bOut), PGPLiteralData.TEXT, file);
         comData.close();
         // object that encrypts the data
         PGPEncryptedDataGenerator cPk = new PGPEncryptedDataGenerator(PGPEncryptedDataGenerator.CAST5,
@@ -269,6 +278,7 @@ public class PGPFrogUtil {
         }
         return sKey;
     }
+
     private static PGPPrivateKey findSecretKey(InputStream keyIn, long keyID, char[] pass)
             throws IOException, PGPException, NoSuchProviderException {
         PGPSecretKeyRingCollection pgpSec = new PGPSecretKeyRingCollection(PGPUtil.getDecoderStream(keyIn));
@@ -279,6 +289,7 @@ public class PGPFrogUtil {
         return pgpSecKey.extractPrivateKey(pass, PROVIDER_STRING);
     }
 
+    @Deprecated
     public static String getEncryptedBase64(String inputString, PGPPublicKey key) {
         File tempFile = null;
         try {
@@ -286,6 +297,7 @@ public class PGPFrogUtil {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             IOUtils.write(inputString, new FileOutputStream(tempFile));
             encrypt(tempFile, byteArrayOutputStream, key);
+            System.out.println(Arrays.toString(byteArrayOutputStream.toByteArray()));
             return new String(Base64.decode(byteArrayOutputStream.toByteArray()));
         } catch (IOException | NoSuchProviderException | PGPException ex) {
             throw new RuntimeException("A Exception occure.ExClass=" + ex.getClass() + ", ex=" + ex.getMessage());
@@ -295,7 +307,7 @@ public class PGPFrogUtil {
 
     }
 
-
+    @Deprecated
     public static String getDecryptedBase64(String inputString, File privateKey, String password) throws IOException {
         try {
             return decrypt(Base64.decode(inputString), privateKey, password.toCharArray());

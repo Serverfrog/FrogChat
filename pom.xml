@@ -251,6 +251,11 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcpg-jdk16</artifactId>
                 <version>1.46</version>
+            </dependency> 
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-ext-jdk16</artifactId>
+                <version>1.46</version>
             </dependency>
             <dependency> 
                 <groupId>javax</groupId> 
@@ -337,5 +342,6 @@
         <module>FrogChatCore</module>
         <module>FrogChatGui</module>
         <module>FrogChatGuiFx</module>
+        <module>FrogChatWeb</module>
     </modules>
 </project>

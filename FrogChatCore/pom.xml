@@ -10,6 +10,7 @@
     <artifactId>FrogChatCore</artifactId>
     <packaging>ejb</packaging> 
     
+    <name>2 - Core - FrogChatCore</name>
     <build>
         <plugins>
             <plugin>
@@ -34,7 +35,6 @@
     </build>
     
     
-    <name>2 - Core - FrogChatCore</name>
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>

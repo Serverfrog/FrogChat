@@ -19,3 +19,4 @@ hs_err_pid*
 /FrogChatCore/target/
 /FrogChatGui/target/
 /FrogChatGuiFx/target/
+/FrogChatWeb/target/
