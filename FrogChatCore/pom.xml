@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>FrogChat</artifactId> 
+        <groupId>de.serverfrog</groupId>
+        <version>0.1</version>
+    </parent>
+    <groupId>de.serverfrog</groupId>
+    <artifactId>FrogChatCore</artifactId>
+    <packaging>ejb</packaging> 
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <!--            <resource>
+                <directory>src/main/webapp/WEB-INF</directory>
+                <filtering>true</filtering>
+            </resource>-->
+        </resources>
+    </build>
+    
+    
+    <name>2 - Core - FrogChatCore</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.serverfrog</groupId>
+            <artifactId>FrogChatEncryption</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-server-ejb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-server-eclipselink</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>FrogChat</artifactId>
+        <groupId>de.serverfrog</groupId>
+        <version>0.1</version>
+    </parent>
+
+    <groupId>de.serverfrog</groupId>
+    <artifactId>FrogChatGuiFx</artifactId>
+    <packaging>jar</packaging>
+
+    <name>3 - Gui - FrogChatGuiFx</name>
+    <organization>
+        <!-- Used as the 'Vendor' for JNLP generation -->
+        <name>Serverfrog.de</name>
+    </organization>
+    <properties>        
+        <app.name>frogchat</app.name>
+        <client>javafx</client>
+        <javafx.version>2.2</javafx.version>
+        <mainclass.name>de.serverfrog.frogchatgui.MainApp</mainclass.name>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${mainclass.name}</mainClass>
+                    <jfxMainAppJarName>${app.name}</jfxMainAppJarName>
+                </configuration>
+            </plugin>
+
+            <!--brauche ich wohl nicht, geht eigentlich automatisch-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/gfx</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                    <executions>
+                        <execution>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <taskdef name="gfx" classname="org.granite.generator.javafx.AntJavaFXTask"/>
+
+                                    <gfx outputdir="${basedir}/src/main/java"
+                                         baseoutputdir="${project.build.directory}/generated-sources/gfx"
+                                         tide="true"
+                                         uid="uid"
+                                         entityfactory="org.granite.generator.as3.BVEntityFactory">
+                                        <translator java="de.serverfrog.${app.name}.entities" client="de.serverfrog.${app.name}.gui.entities"/>
+                                        <translator java="de.serverfrog.${app.name}.services" client="de.serverfrog.${app.name}.gui.services"/>
+                                        <classpath>
+                                            <path refid="maven.plugin.classpath"/>
+                                        </classpath>
+                                        <fileset dir="${basedir}/../FrogChatCore/target/classes">
+                                            <include name="**/entities/*.class"/>
+                                            <include name="**/services/*Service.class"/>
+                                            <include name="**/services/*Repository.class"/>
+                                        </fileset>
+                                    </gfx>
+                                </target>
+                            </configuration>
+                        </execution>
+                    </executions>
+
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.ant</groupId>
+                            <artifactId>ant</artifactId>
+                            <version>1.8.2</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.hibernate.javax.persistence</groupId>
+                            <artifactId>hibernate-jpa-2.0-api</artifactId>
+                            <version>1.0.1.Final</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>javax.validation</groupId>
+                            <artifactId>validation-api</artifactId>
+                            <version>1.0.0.GA</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>javax.jdo</groupId>
+                            <artifactId>jdo2-api</artifactId>
+                            <version>2.3-eb</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy</artifactId>
+                            <version>1.6.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>antlr</groupId>
+                            <artifactId>antlr</artifactId>
+                            <version>2.7.7</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>asm</groupId>
+                            <artifactId>asm</artifactId>
+                            <version>2.2.3</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.thoughtworks.xstream</groupId>
+                            <artifactId>xstream</artifactId>
+                            <version>1.2.2</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.springframework.data</groupId>
+                            <artifactId>spring-data-jpa</artifactId>
+                            <version>1.1.0.RELEASE</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.graniteds</groupId>
+                            <artifactId>granite-server-core</artifactId>
+                            <version>${graniteds.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.graniteds</groupId>
+                            <artifactId>granite-generator-share</artifactId>
+                            <version>${graniteds.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.graniteds</groupId>
+                            <artifactId>granite-generator</artifactId>
+                            <version>${graniteds.version}</version>
+                        </dependency>  
+                        <dependency>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>FrogChatCore</artifactId>
+                            <version>${project.version}</version>
+                            <type>jar</type>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+    <dependencies>        
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>FrogChatEncryption</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+        </dependency> 
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.3.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx</artifactId>
+            <version>8.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-client-java</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-client-javafx</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpasyncclient</artifactId>
+            <version>4.0</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+</project>
